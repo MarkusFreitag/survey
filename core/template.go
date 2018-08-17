@@ -10,27 +10,32 @@ import (
 
 var DisableColor = false
 
+type Icon struct {
+  Symbol  string
+  Color   string
+}
+
 var (
 	// HelpInputRune is the rune which the user should enter to trigger
 	// more detailed question help
-	HelpInputRune = '?'
+	HelpInputIcon = Icon{Symbol: "?", Color: "cyan"}
 
 	// ErrorIcon will be be shown before an error
-	ErrorIcon = "X"
+	ErrorIcon = Icon{Symbol: "X", Color: "red"}
 
 	// HelpIcon will be shown before more detailed question help
-	HelpIcon = "????"
+	HelpIcon = Icon{Symbol: "????", Color: "cyan"}
 	// QuestionIcon will be shown before a question Message
-	QuestionIcon = "?"
+	QuestionIcon = Icon{Symbol: "?", Color: "green+hb"}
 
 	// MarkedOptionIcon will be prepended before a selected multiselect option
-	MarkedOptionIcon = "[x]"
+	MarkedOptionIcon = Icon{Symbol: "[x]", Color: "green"}
 	// UnmarkedOptionIcon will be prepended before an unselected multiselect option
-	UnmarkedOptionIcon = "[ ]"
+	UnmarkedOptionIcon = Icon{Symbol: "[ ]", Color: "default+hb"}
 
 	// SelectFocusIcon is prepended to an option to signify the user is
 	// currently focusing that option
-	SelectFocusIcon = ">"
+	SelectFocusIcon = Icon{Symbol: ">", Color: "cyan"}
 )
 
 /*
@@ -40,14 +45,14 @@ var (
   are the same.
 */
 func SetFancyIcons() {
-	ErrorIcon = "✘"
-	HelpIcon = "ⓘ"
+	ErrorIcon.Symbol = "✘"
+	HelpIcon.Symbol = "ⓘ"
 	// QuestionIcon fancy and non-fancy form are the same
 
-	MarkedOptionIcon = "◉"
-	UnmarkedOptionIcon = "◯"
+	MarkedOptionIcon.Symbol = "◉"
+	UnmarkedOptionIcon.Symbol = "◯"
 
-	SelectFocusIcon = "❯"
+	SelectFocusIcon.Symbol = "❯"
 }
 
 var TemplateFuncs = map[string]interface{}{
@@ -58,26 +63,26 @@ var TemplateFuncs = map[string]interface{}{
 		}
 		return ansi.ColorCode(color)
 	},
-	"HelpInputRune": func() string {
-		return string(HelpInputRune)
+	"HelpInputIcon": func() string {
+		return HelpInputIcon.Symbol
 	},
 	"ErrorIcon": func() string {
-		return ErrorIcon
+		return ErrorIcon.Symbol
 	},
 	"HelpIcon": func() string {
-		return HelpIcon
+		return HelpIcon.Symbol
 	},
 	"QuestionIcon": func() string {
-		return QuestionIcon
+		return QuestionIcon.Symbol
 	},
 	"MarkedOptionIcon": func() string {
-		return MarkedOptionIcon
+		return MarkedOptionIcon.Symbol
 	},
 	"UnmarkedOptionIcon": func() string {
-		return UnmarkedOptionIcon
+		return UnmarkedOptionIcon.Symbol
 	},
 	"SelectFocusIcon": func() string {
-		return SelectFocusIcon
+		return SelectFocusIcon.Symbol
 	},
 }
 

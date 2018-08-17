@@ -45,13 +45,13 @@ type EditorTemplateData struct {
 
 // Templates with Color formatting. See Documentation: https://github.com/mgutz/ansi#style-format
 var EditorQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color}}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color}}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }} {{color "reset"}}
 {{- if .ShowAnswer}}
   {{- color "cyan"}}{{.Answer}}{{color "reset"}}{{"\n"}}
 {{- else }}
-  {{- if and .Help (not .ShowHelp)}}{{color "cyan"}}[{{ HelpInputRune }} for help]{{color "reset"}} {{end}}
+  {{- if and .Help (not .ShowHelp)}}{{color HelpInputIcon.Color}}[{{ HelpInputIcon.Symbol }} for help]{{color "reset"}} {{end}}
   {{- if and .Default (not .HideDefault)}}{{color "white"}}({{.Default}}) {{color "reset"}}{{end}}
   {{- color "cyan"}}[Enter to launch editor] {{color "reset"}}
 {{- end}}`
@@ -105,7 +105,7 @@ func (e *Editor) Prompt() (interface{}, error) {
 		if r == terminal.KeyEndTransmission {
 			break
 		}
-		if r == core.HelpInputRune && e.Help != "" {
+		if r == core.HelpInputIcon && e.Help != "" {
 			err = e.Render(
 				EditorQuestionTemplate,
 				EditorTemplateData{Editor: *e, ShowHelp: true},

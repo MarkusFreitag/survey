@@ -42,10 +42,10 @@ func TestSelectRender(t *testing.T) {
 			SelectTemplateData{SelectedIndex: 2, PageEntries: prompt.Options},
 			strings.Join(
 				[]string{
-					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter]", core.QuestionIcon),
+					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter]", core.QuestionIcon.Symbol),
 					"  foo",
 					"  bar",
-					fmt.Sprintf("%s baz", core.SelectFocusIcon),
+					fmt.Sprintf("%s baz", core.SelectFocusIcon.Symbol),
 					"  buz\n",
 				},
 				"\n",
@@ -55,7 +55,7 @@ func TestSelectRender(t *testing.T) {
 			"Test Select answer output",
 			prompt,
 			SelectTemplateData{Answer: "buz", ShowAnswer: true, PageEntries: prompt.Options},
-			fmt.Sprintf("%s Pick your word: buz\n", core.QuestionIcon),
+			fmt.Sprintf("%s Pick your word: buz\n", core.QuestionIcon.Symbol),
 		},
 		{
 			"Test Select question output with help hidden",
@@ -63,10 +63,10 @@ func TestSelectRender(t *testing.T) {
 			SelectTemplateData{SelectedIndex: 2, PageEntries: prompt.Options},
 			strings.Join(
 				[]string{
-					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter, %s for more help]", core.QuestionIcon, string(core.HelpInputRune)),
+					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter, %s for more help]", core.QuestionIcon.Symbol, core.HelpInputIcon.Symbol),
 					"  foo",
 					"  bar",
-					fmt.Sprintf("%s baz", core.SelectFocusIcon),
+					fmt.Sprintf("%s baz", core.SelectFocusIcon.Symbol),
 					"  buz\n",
 				},
 				"\n",
@@ -78,11 +78,11 @@ func TestSelectRender(t *testing.T) {
 			SelectTemplateData{SelectedIndex: 2, ShowHelp: true, PageEntries: prompt.Options},
 			strings.Join(
 				[]string{
-					fmt.Sprintf("%s This is helpful", core.HelpIcon),
-					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter]", core.QuestionIcon),
+					fmt.Sprintf("%s This is helpful", core.HelpIcon.Symbol),
+					fmt.Sprintf("%s Pick your word:  [Use arrows to move, type to filter]", core.QuestionIcon.Symbol),
 					"  foo",
 					"  bar",
-					fmt.Sprintf("%s baz", core.SelectFocusIcon),
+					fmt.Sprintf("%s baz", core.SelectFocusIcon.Symbol),
 					"  buz\n",
 				},
 				"\n",

@@ -29,13 +29,13 @@ type InputTemplateData struct {
 
 // Templates with Color formatting. See Documentation: https://github.com/mgutz/ansi#style-format
 var InputQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color }}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color }}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }} {{color "reset"}}
 {{- if .ShowAnswer}}
   {{- color "cyan"}}{{.Answer}}{{color "reset"}}{{"\n"}}
 {{- else }}
-  {{- if and .Help (not .ShowHelp)}}{{color "cyan"}}[{{ HelpInputRune }} for help]{{color "reset"}} {{end}}
+  {{- if and .Help (not .ShowHelp)}}{{color HelpInputIcon.Color }}[{{ HelpInputIcon.Symbol }} for help]{{color "reset"}} {{end}}
   {{- if .Default}}{{color "white"}}({{.Default}}) {{color "reset"}}{{end}}
 {{- end}}`
 
@@ -66,7 +66,7 @@ func (i *Input) Prompt() (interface{}, error) {
 		// terminal will echo the \n so we need to jump back up one row
 		cursor.PreviousLine(1)
 
-		if string(line) == string(core.HelpInputRune) && i.Help != "" {
+		if string(line) == core.HelpInputIcon.Symbol && i.Help != "" {
 			err = i.Render(
 				InputQuestionTemplate,
 				InputTemplateData{Input: *i, ShowHelp: true},

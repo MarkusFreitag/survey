@@ -46,16 +46,16 @@ type MultiSelectTemplateData struct {
 }
 
 var MultiSelectQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color}}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color}}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }}{{ .FilterMessage }}{{color "reset"}}
 {{- if .ShowAnswer}}{{color "cyan"}} {{.Answer}}{{color "reset"}}{{"\n"}}
 {{- else }}
-	{{- "  "}}{{- color "cyan"}}[Use arrows to move, type to filter{{- if and .Help (not .ShowHelp)}}, {{ HelpInputRune }} for more help{{end}}]{{color "reset"}}
+	{{- "  "}}{{- color "cyan"}}[Use arrows to move, type to filter{{- if and .Help (not .ShowHelp)}}, {{ HelpInputIcon }} for more help{{end}}]{{color "reset"}}
   {{- "\n"}}
   {{- range $ix, $option := .PageEntries}}
-    {{- if eq $ix $.SelectedIndex}}{{color "cyan"}}{{ SelectFocusIcon }}{{color "reset"}}{{else}} {{end}}
-    {{- if index $.Checked $option}}{{color "green"}} {{ MarkedOptionIcon }} {{else}}{{color "default+hb"}} {{ UnmarkedOptionIcon }} {{end}}
+    {{- if eq $ix $.SelectedIndex}}{{color SelectedFocusIcon.Color}}{{ SelectFocusIcon.Symbol }}{{color "reset"}}{{else}} {{end}}
+    {{- if index $.Checked $option}}{{color MarkedOptionIcon.Color}} {{ MarkedOptionIcon.Symbol }} {{else}}{{color UnmarkedOptionIcon.Color}} {{ UnmarkedOptionIcon.Symbol }} {{end}}
     {{- color "reset"}}
     {{- " "}}{{$option}}{{"\n"}}
   {{- end}}
@@ -96,7 +96,7 @@ func (m *MultiSelect) OnChange(line []rune, pos int, key rune) (newLine []rune, 
 			}
 		}
 		// only show the help message if we have one to show
-	} else if key == core.HelpInputRune && m.Help != "" {
+	} else if key == core.HelpInputIcon && m.Help != "" {
 		m.showingHelp = true
 	} else if key == terminal.KeyEscape {
 		m.VimMode = !m.VimMode

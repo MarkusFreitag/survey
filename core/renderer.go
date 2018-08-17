@@ -13,7 +13,7 @@ type Renderer struct {
 	errorLineCount int
 }
 
-var ErrorTemplate = `{{color "red"}}{{ ErrorIcon }} Sorry, your reply was invalid: {{.Error}}{{color "reset"}}
+var ErrorTemplate = `{{color ErrorIcon.Color}}{{ ErrorIcon.Symbol }} Sorry, your reply was invalid: {{.Error}}{{color "reset"}}
 `
 
 func (r *Renderer) WithStdio(stdio terminal.Stdio) {

@@ -45,15 +45,15 @@ type SelectTemplateData struct {
 }
 
 var SelectQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color}}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color}}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }}{{ .FilterMessage }}{{color "reset"}}
 {{- if .ShowAnswer}}{{color "cyan"}} {{.Answer}}{{color "reset"}}{{"\n"}}
 {{- else}}
-  {{- "  "}}{{- color "cyan"}}[Use arrows to move, type to filter{{- if and .Help (not .ShowHelp)}}, {{ HelpInputRune }} for more help{{end}}]{{color "reset"}}
+  {{- "  "}}{{- color HelpInputIcon.Color}}[Use arrows to move, type to filter{{- if and .Help (not .ShowHelp)}}, {{ HelpInputIcon.Symbol }} for more help{{end}}]{{color "reset"}}
   {{- "\n"}}
   {{- range $ix, $choice := .PageEntries}}
-    {{- if eq $ix $.SelectedIndex}}{{color "cyan+b"}}{{ SelectFocusIcon }} {{else}}{{color "default+hb"}}  {{end}}
+    {{- if eq $ix $.SelectedIndex}}{{color SelectFocusIcon.Color}}{{ SelectFocusIcon.Symbol }} {{else}}{{color "default+hb"}}  {{end}}
     {{- $choice}}
     {{- color "reset"}}{{"\n"}}
   {{- end}}
@@ -93,7 +93,7 @@ func (s *Select) OnChange(line []rune, pos int, key rune) (newLine []rune, newPo
 			s.selectedIndex++
 		}
 		// only show the help message if we have one
-	} else if key == core.HelpInputRune && s.Help != "" {
+	} else if key == core.HelpInputIcon && s.Help != "" {
 		s.showingHelp = true
 		// if the user wants to toggle vim mode on/off
 	} else if key == terminal.KeyEscape {

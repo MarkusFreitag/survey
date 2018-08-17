@@ -226,8 +226,8 @@ All of the prompts have a `Help` field which can be defined to provide more info
 
 ### Changing the input rune
 
-In some situations, `?` is a perfectly valid response. To handle this, you can change the rune that survey
-looks for by setting the `HelpInputRune` variable in `survey/core`:
+In some situations, `?` is a perfectly valid response. To handle this, you can change the icon that survey
+looks for by setting the `HelpInputIcon` variable in `survey/core`:
 
 ```golang
 import (

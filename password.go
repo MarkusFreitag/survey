@@ -28,10 +28,10 @@ type PasswordTemplateData struct {
 
 // Templates with Color formatting. See Documentation: https://github.com/mgutz/ansi#style-format
 var PasswordQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color}}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color}}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }} {{color "reset"}}
-{{- if and .Help (not .ShowHelp)}}{{color "cyan"}}[{{ HelpInputRune }} for help]{{color "reset"}} {{end}}`
+{{- if and .Help (not .ShowHelp)}}{{color HelpInputIcon.Color}}[{{ HelpInputIcon.Symbol }} for help]{{color "reset"}} {{end}}`
 
 func (p *Password) Prompt() (line interface{}, err error) {
 	// render the question template
@@ -63,7 +63,7 @@ func (p *Password) Prompt() (line interface{}, err error) {
 			return string(line), err
 		}
 
-		if string(line) == string(core.HelpInputRune) {
+		if string(line) == core.HelpInputIcon {
 			// terminal will echo the \n so we need to jump back up one row
 			cursor.PreviousLine(1)
 

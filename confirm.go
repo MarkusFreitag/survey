@@ -24,13 +24,13 @@ type ConfirmTemplateData struct {
 
 // Templates with Color formatting. See Documentation: https://github.com/mgutz/ansi#style-format
 var ConfirmQuestionTemplate = `
-{{- if .ShowHelp }}{{- color "cyan"}}{{ HelpIcon }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
-{{- color "green+hb"}}{{ QuestionIcon }} {{color "reset"}}
+{{- if .ShowHelp }}{{- color HelpIcon.Color}}{{ HelpIcon.Symbol }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color QuestionIcon.Color}}{{ QuestionIcon.Symbol }} {{color "reset"}}
 {{- color "default+hb"}}{{ .Message }} {{color "reset"}}
 {{- if .Answer}}
   {{- color "cyan"}}{{.Answer}}{{color "reset"}}{{"\n"}}
 {{- else }}
-  {{- if and .Help (not .ShowHelp)}}{{color "cyan"}}[{{ HelpInputRune }} for help]{{color "reset"}} {{end}}
+  {{- if and .Help (not .ShowHelp)}}{{color HelpInputIcon.Color}}[{{ HelpInputIcon.Symbol }} for help]{{color "reset"}} {{end}}
   {{- color "white"}}{{if .Default}}(Y/n) {{else}}(y/N) {{end}}{{color "reset"}}
 {{- end}}`
 
@@ -72,7 +72,7 @@ func (c *Confirm) getBool(showHelp bool) (bool, error) {
 			answer = false
 		case val == "":
 			answer = c.Default
-		case val == string(core.HelpInputRune) && c.Help != "":
+		case val == core.HelpInputIcon && c.Help != "":
 			err := c.Render(
 				ConfirmQuestionTemplate,
 				ConfirmTemplateData{Confirm: *c, ShowHelp: true},
